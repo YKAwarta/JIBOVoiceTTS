@@ -1,37 +1,34 @@
-async function speakText() {
-  const text = document.getElementById('text-input').value;
-  
-  const apiKey = '72dcc43a4793b85e294f28c75475caef';
+document.getElementById("speakBtn").addEventListener("click", async function() {
+    const text = document.getElementById("textInput").value;
+    const apiKey = "72dcc43a4793b85e294f28c75475caef";
+    const voiceId = "A9ATTqUUQ6GHu0coCz8t";
+    const url = "https://api.elevenlabs.io/v1/text-to-speech";
 
-  if (!text) {
-    alert("Please enter some text.");
-    return;
-  }
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "xi-api-key": apiKey
+            },
+            body: JSON.stringify({
+                text: text,
+                voice_id: voiceId,
+                stability: 0.5,
+                similarity_boost: 0.75
+            })
+        });
 
-  try {
-    const response = await fetch('https://api.elevenlabs.io/tts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        text: text,
-        language: 'ar'
-      })
-    });
+        if (!response.ok) {
+            throw new Error("An error occurred while generating the audio");
+        }
 
-    if (!response.ok) {
-      alert("Error fetching audio. Please try again.");
-      return;
+        const audioBlob = await response.blob();
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+    } catch (error) {
+        console.error(error);
+        alert("An error occurred: " + error.message);
     }
-    
-    const audioUrl = await response.text();
-    
-    const audio = new Audio(audioUrl);
-    audio.play();
-  } catch (error) {
-    alert("An error occurred. Please try again.");
-    console.error('Error:', error);
-  }
-}
+});
