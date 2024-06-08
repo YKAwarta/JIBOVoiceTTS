@@ -1,7 +1,7 @@
 async function speakText() {
   const text = document.getElementById('text-input').value;
   
-  const apiKey = 'YOUR_ELEVENLABS_API_KEY';
+  const apiKey = '72dcc43a4793b85e294f28c75475caef';
 
   if (!text) {
     alert("Please enter some text.");
