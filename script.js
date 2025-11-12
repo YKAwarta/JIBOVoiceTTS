@@ -1,6 +1,6 @@
 document.getElementById("speakBtn").addEventListener("click", async function() {
     const text = document.getElementById("textInput").value;
-    const apiKey = "72dcc43a4793b85e294f28c75475caef";
+    const apiKey = "your_api_key_here";
     const voiceId = "A9ATTqUUQ6GHu0coCz8t";
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`;
 
